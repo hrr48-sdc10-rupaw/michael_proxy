@@ -10,6 +10,7 @@ app.use(logger('dev'));
 app.use(express.static('.'))
 app.use('/hero-section/dist', express.static('../hero-section/dist/'));
 app.use('/reviews/client/dist', express.static('../reviews/client/dist'));
+app.use('/body/client/dist', express.static('../body/client/dist'))
 app.use('/assets', express.static('../reviews/client/dist/assets'));
 
 app.get('/', (req, res) => {
@@ -22,13 +23,19 @@ app.get('/api/hero/all_info/:id', async (req, res) => {
     .then(result => {
       res.send(result.data)
     })
-    .catch(err => console.log('error: ', err))
+    .catch(err => console.log('error: ', err));
 })
 
 app.get('/moist-air/reviews', (req, res) => {
   axios.get(`http://localhost:3002/moist-air/reviews`)
     .then(result => res.send(result.data))
-    .catch(err => console.log('error: ', err))
+    .catch(err => console.log('error: ', err));
+})
+
+app.get('/moist-air/game', (req, res) => {
+  axios.get('http://localhost:3003/moist-air/game')
+    .then(result => res.send(result.data))
+    .catch(err => console.log('following error fetching data for body section: ', err));
 })
 
 app.listen(port, () => {
